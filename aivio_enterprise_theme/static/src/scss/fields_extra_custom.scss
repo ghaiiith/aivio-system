@@ -1,0 +1,332 @@
+// Copyright (C) 2026 aivio_enterprise_theme
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+:root {
+    --aivio-brand: #6f42c1;
+    --aivio-brand-hover: #5d35a8;
+    --aivio-accent: #00a6a6;
+    --aivio-text: #343a40;
+    --aivio-muted: #6c757d;
+    --aivio-border: #dee2e6;
+    --aivio-bg: #f7f8fa;
+    --aivio-card: #ffffff;
+    --aivio-danger: #dc3545;
+}
+
+// Inputs and required fields.
+.o_input {
+    border: 1px solid var(--aivio-border);
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    background-color: transparent;
+}
+
+.o_required_modifier .o_input {
+    border-bottom: 2px solid var(--aivio-brand);
+    background-color: transparent !important;
+}
+
+.o_field_widget.o_field_many2one .o_external_button,
+.o_field_many2one .o_external_button {
+    color: var(--aivio-brand);
+}
+
+.o_field_many2one input[type="text"]:disabled {
+    background-color: #ffffff;
+}
+
+// Button box.
+.oe_button_box .oe_stat_button {
+    border-radius: .5rem;
+
+    &:hover {
+        background-color: rgba(111, 66, 193, .06) !important;
+    }
+
+    .o_button_icon {
+        color: var(--aivio-brand) !important;
+    }
+}
+
+// Form view.
+.o_form_view .o_form_sheet_bg {
+    border-bottom: 1px solid var(--aivio-border) !important;
+    background: var(--aivio-bg) !important;
+}
+
+.o_form_view .o_form_sheet {
+    border-radius: .75rem;
+    border-color: rgba(0, 0, 0, .06);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, .04);
+}
+
+// Search view.
+.o_searchview {
+    border: 0;
+    border-bottom: 1px solid #ced4da;
+    align-items: flex-end;
+    position: relative;
+    padding: 0 20px 1px 0;
+}
+
+.o_searchview .o_searchview_facet {
+    border: 1px solid #d7d3df;
+    background: #f8f7fb;
+    color: var(--aivio-text);
+    border-radius: 1rem;
+}
+
+// List view.
+.o_list_view {
+    background-color: transparent;
+
+    thead {
+        background-color: #ffffff;
+        border: none;
+        border-bottom: 1px solid #d8dadd;
+
+        > tr > th {
+            border-left: 0;
+            padding: 12px 6px;
+
+            &:not(.o_list_record_selector) {
+                border-left: 0;
+                display: table-cell;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: top;
+            }
+        }
+    }
+
+    tbody tr:hover {
+        background-color: rgba(111, 66, 193, .04);
+    }
+
+    .o_list_record_selector,
+    .o_list_record_remove,
+    .o_handle_cell {
+        width: 39px;
+        padding-left: 16px !important;
+        padding-right: 5px !important;
+    }
+
+    .o_optional_columns_dropdown_toggle {
+        padding: 8px 10px;
+    }
+
+    .text-info {
+        color: var(--aivio-brand) !important;
+    }
+}
+
+// Tables.
+.table {
+    thead th {
+        vertical-align: bottom;
+        border-bottom: none;
+        padding-left: 0;
+    }
+
+    td {
+        padding: .35rem;
+        vertical-align: top;
+        height: 10px;
+        border-top: 1px solid var(--aivio-border);
+    }
+}
+
+// Navbar base. The app-launcher grid is in a separate SCSS file.
+.o_main_navbar {
+    --o-navbar-height: 46px;
+    height: var(--o-navbar-height);
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    background: #ffffff !important;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, .05);
+
+    .o_menu_brand {
+        color: #212529 !important;
+        font-weight: 600;
+    }
+
+    .dropdown-toggle,
+    .o_menu_sections a,
+    .o_menu_sections .dropdown > a,
+    .o_menu_sections .dropdown-toggle {
+        color: #212529 !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: .45rem;
+
+        &:hover {
+            color: #212529 !important;
+            background: rgba(111, 66, 193, .07) !important;
+        }
+
+        &.active,
+        &:active,
+        &:focus {
+            color: #212529 !important;
+            background: #f0ecf8 !important;
+        }
+    }
+
+    .o_menu_systray .badge,
+    .o_notification_counter {
+        color: #ffffff !important;
+        background-color: var(--aivio-danger) !important;
+        font-size: 11px;
+    }
+}
+
+// Keep settings page navbar consistent.
+body:has(.o_settings_container) .o_main_navbar {
+    background: #ffffff !important;
+}
+
+.badge,
+.o_notification_counter {
+    color: #ffffff !important;
+}
+
+.badge-danger,
+.bg-danger,
+.text-bg-danger {
+    background-color: var(--aivio-danger) !important;
+    color: #ffffff !important;
+}
+
+// Tabs.
+.nav-tabs {
+    .nav-link {
+        color: var(--aivio-muted);
+        background-color: #ffffff;
+        border-color: #ced4da;
+        border-radius: .5rem .5rem 0 0;
+
+        &:hover {
+            color: var(--aivio-accent);
+        }
+
+        &.active {
+            color: #212529;
+            background-color: #ffffff;
+            border-top-color: var(--aivio-brand);
+        }
+    }
+
+    .nav-item.show .nav-link {
+        color: var(--aivio-accent);
+    }
+}
+
+// Buttons.
+.btn {
+    font-weight: 500;
+    color: var(--aivio-text);
+    border-radius: .45rem;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: var(--aivio-brand);
+    border-color: var(--aivio-brand);
+
+    &:hover,
+    &:focus {
+        background-color: var(--aivio-brand-hover);
+        border-color: var(--aivio-brand-hover);
+    }
+}
+
+.btn-secondary {
+    color: #5a5a5a;
+    background-color: #ffffff;
+    border: 1px solid #d8dadd;
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    &.dropdown-toggle {
+        color: #212529;
+        background-color: #f3f4f6;
+        border-color: #d8dadd;
+    }
+}
+
+// Dropdowns.
+.o_dropdown_toggler_btn {
+    padding: 0;
+    color: var(--aivio-muted);
+    text-transform: none !important;
+    background-color: transparent !important;
+    border: 1px solid transparent;
+
+    &:focus,
+    &:hover {
+        border-color: #d1d1d1;
+    }
+}
+
+.btn-group .o_dropdown {
+    border: none;
+}
+
+// Control panel.
+.o_control_panel > .o_cp_right {
+    max-height: 60px;
+}
+
+.o_control_panel {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+a {
+    color: #017e84;
+}
+
+// RTL refinements.
+.o_rtl .o_searchview,
+html[dir="rtl"] .o_searchview {
+    padding: 0 0 1px 20px;
+}
+
+// Dark mode support.
+.o_web_client.o_dark,
+body.o_dark {
+    --aivio-text: #e9ecef;
+    --aivio-muted: #adb5bd;
+    --aivio-border: #343a40;
+    --aivio-bg: #17181c;
+    --aivio-card: #202126;
+
+    .o_main_navbar,
+    .o_control_panel,
+    .o_list_view thead,
+    .nav-tabs .nav-link,
+    .o_form_view .o_form_sheet,
+    .o_field_many2one input[type="text"]:disabled {
+        background-color: var(--aivio-card) !important;
+        color: var(--aivio-text) !important;
+    }
+
+    .o_main_navbar .o_menu_brand,
+    .o_main_navbar .dropdown-toggle,
+    .o_main_navbar .o_menu_sections a,
+    .o_main_navbar .o_menu_sections .dropdown-toggle {
+        color: var(--aivio-text) !important;
+    }
+
+    .o_form_view .o_form_sheet_bg {
+        background: var(--aivio-bg) !important;
+    }
+
+    .o_input,
+    .o_searchview {
+        color: var(--aivio-text);
+        border-color: var(--aivio-border);
+    }
+}

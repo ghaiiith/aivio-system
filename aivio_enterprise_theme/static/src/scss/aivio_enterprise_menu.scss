@@ -1,0 +1,207 @@
+// Copyright (C) 2026 aivio_enterprise_theme
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+// Enterprise-style backend app launcher for Odoo Community.
+.o_main_navbar {
+    .o_navbar_apps_menu > .dropdown > .dropdown-toggle,
+    .o_navbar_apps_menu button[title="Home Menu"] {
+        width: var(--o-navbar-height, 46px);
+        min-width: var(--o-navbar-height, 46px);
+        height: var(--o-navbar-height, 46px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff !important;
+        background: linear-gradient(135deg, var(--aivio-brand), #9b72df) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+
+        &:hover,
+        &:focus {
+            background: linear-gradient(135deg, #5d35a8, #875bd7) !important;
+        }
+
+        .oi,
+        .fa {
+            font-size: 1.25rem;
+        }
+    }
+}
+
+.o_aivio_apps_menu {
+    width: 560px;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, .18);
+}
+
+.o_aivio_apps_menu_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .15rem .25rem .85rem;
+    margin-bottom: .85rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .07);
+}
+
+.o_aivio_apps_menu_title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.o_aivio_apps_menu_copyright {
+    font-size: .76rem;
+    color: #8b8d94;
+    white-space: nowrap;
+}
+
+.o_aivio_apps_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: .75rem;
+}
+
+.o-dropdown--menu .o-dropdown-item.o_aivio_app,
+.dropdown-menu .o-dropdown-item.o_aivio_app,
+.o_aivio_app {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .55rem;
+    min-height: 104px;
+    padding: .85rem .5rem !important;
+    border-radius: .85rem;
+    border: 1px solid transparent;
+    color: #343a40 !important;
+    text-align: center;
+    white-space: normal;
+    background: transparent;
+
+    &:hover,
+    &:focus,
+    &.focus {
+        background: #f4f0fb !important;
+        border-color: #e2d8f4;
+        color: #212529 !important;
+    }
+}
+
+.o_aivio_app_icon_wrap {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f7f3ff, #ffffff);
+    box-shadow: inset 0 0 0 1px rgba(111, 66, 193, .08), 0 6px 16px rgba(15, 23, 42, .08);
+}
+
+.o_aivio_app_icon {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.o_aivio_app_fallback {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #ffffff;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--aivio-brand), #00a6a6);
+}
+
+.o_aivio_app_name {
+    width: 100%;
+    font-size: .82rem;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.o_aivio_dropdown_footer {
+    margin-top: 1rem;
+    padding-top: .75rem;
+    border-top: 1px solid rgba(0, 0, 0, .07);
+    text-align: center;
+    color: #8b8d94;
+    font-size: .75rem;
+}
+
+// Mobile app sidebar improvements.
+.o_app_menu_sidebar {
+    .o_sidebar_topbar {
+        background: linear-gradient(135deg, var(--aivio-brand), #8a63d2);
+        color: #ffffff;
+
+        .btn.btn-primary {
+            background: rgba(255, 255, 255, .14);
+            border-color: rgba(255, 255, 255, .2);
+            color: #ffffff;
+        }
+    }
+
+    .o_burger_menu_app .o_app {
+        margin: .25rem .75rem;
+        padding: .65rem .75rem !important;
+        border-radius: .75rem;
+
+        &:hover,
+        &.bg-primary-subtle {
+            background: #f4f0fb !important;
+        }
+    }
+}
+
+// Dark mode.
+.o_web_client.o_dark,
+body.o_dark {
+    .o_aivio_apps_menu {
+        background: #202126;
+        box-shadow: 0 20px 55px rgba(0, 0, 0, .45);
+    }
+
+    .o_aivio_apps_menu_header,
+    .o_aivio_dropdown_footer {
+        border-color: rgba(255, 255, 255, .08);
+    }
+
+    .o_aivio_apps_menu_title,
+    .o_aivio_app {
+        color: #f1f3f5 !important;
+    }
+
+    .o_aivio_app_icon_wrap {
+        background: linear-gradient(135deg, #2b2438, #23242a);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), 0 6px 16px rgba(0, 0, 0, .28);
+    }
+
+    .o_aivio_app:hover,
+    .o_aivio_app:focus,
+    .o_aivio_app.focus {
+        background: rgba(111, 66, 193, .22) !important;
+        border-color: rgba(111, 66, 193, .35);
+    }
+}
+
+// RTL.
+.o_rtl .o_aivio_apps_menu,
+html[dir="rtl"] .o_aivio_apps_menu {
+    direction: rtl;
+}

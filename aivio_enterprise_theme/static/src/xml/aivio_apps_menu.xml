@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!--
+        Safe Odoo 19 navbar extension.
+        Do NOT target positional nodes like ./t[1] or ./t[2]; those change between
+        Community/Enterprise/minor builds and crash Owl when not found.
+        The Dropdown is stable in web.NavBar.AppsMenu desktop branch.
+        Mobile keeps the native Odoo sidebar to avoid breaking responsive menus.
+    -->
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//Dropdown" position="replace">
+            <AivioAppsMenu
+                apps="apps"
+                currentApp="currentApp"
+                getMenuItemHref="getMenuItemHref.bind(this)"
+                onAppSelected="onNavBarDropdownItemSelection.bind(this)"
+                isScopedApp="isScopedApp"
+            />
+        </xpath>
+    </t>
+
+    <t t-name="aivio_enterprise_theme.AppsMenu">
+        <div class="o_aivio_apps_menu">
+            <button class="o_aivio_apps_button" title="Home Menu" data-hotkey="h" t-on-click.prevent.stop="toggle">
+                <i class="oi oi-apps"/>
+            </button>
+            <div t-if="state.open" class="o_aivio_apps_menu_overlay" t-on-click="onOverlayClick">
+                <div class="o_aivio_apps_menu_panel" role="navigation" aria-label="AIVIO Apps Menu">
+                    <div class="o_aivio_apps_search_wrap">
+                        <input
+                            t-ref="searchInput"
+                            class="o_aivio_apps_search"
+                            type="search"
+                            placeholder="Search apps..."
+                            autocomplete="off"
+                            t-att-value="state.query"
+                            t-on-input="onSearchInput"
+                        />
+                    </div>
+                    <div class="o_aivio_apps_grid">
+                        <AivioAppMenuItem
+                            t-foreach="apps"
+                            t-as="app"
+                            t-key="app.id"
+                            app="app"
+                            href="getItemHref(app)"
+                            active="isActive(app)"
+                            onSelected="(selectedApp) => this.selectApp(selectedApp)"
+                        />
+                    </div>
+                    <div t-if="hasNoResults" class="o_aivio_apps_no_results">No apps found</div>
+                    <div class="o_aivio_apps_footer">© <t t-esc="new Date().getFullYear()"/> aivio_enterprise_theme</div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="aivio_enterprise_theme.AppMenuItem">
+        <a
+            class="o_aivio_app_menu_item"
+            t-att-class="{ active: props.active }"
+            role="button"
+            draggable="false"
+            tabindex="0"
+            t-att-href="props.href"
+            t-att-data-menu-xmlid="props.app.xmlid"
+            t-on-click="onClick"
+        >
+            <span class="o_aivio_app_menu_icon">
+                <img t-att-src="iconSrc" t-att-alt="label" draggable="false" loading="lazy"/>
+            </span>
+            <span class="o_aivio_app_menu_label" t-att-title="label"><t t-esc="label"/></span>
+        </a>
+    </t>
+</templates>

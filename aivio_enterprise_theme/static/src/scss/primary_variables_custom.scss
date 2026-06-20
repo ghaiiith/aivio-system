@@ -1,0 +1,31 @@
+// Copyright (C) 2026 aivio_enterprise_theme
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+// AIVIO brand palette. Keep these variables simple because this file is
+// prepended before the normal web asset variables are completely available.
+$o-brand-odoo: #6f42c1;
+$o-brand-primary: #6f42c1;
+$o-brand-secondary: #6c757d;
+$o-brand-lightsecondary: #f8f9fa;
+
+$o-main-text-color: #3f3f46;
+$o-list-footer-bg-color: #ffffff;
+
+$o-btn-secondary-bg: #ffffff;
+$o-btn-secondary-hover-bg: darken($o-btn-secondary-bg, 8%);
+$o-btn-secondary-active-bg: darken($o-btn-secondary-bg, 10%);
+
+// Touch and menu sizing.
+$o-font-size-base-touch: 15px;
+$o-home-menu-container-size: 880px;
+$o-home-menu-app-icon-max-width: 68px;
+$o-home-studio-menu-shadow: 0 1px 0 rgba(0, 0, 0, .24);
+
+// Snackbar.
+$o-snackbar-background-color: #222222;
+$o-snackbar-color: #ffffff;
+$o-snackbar-height: 46px;
+$o-snackbar-left: 15px;
+$o-snackbar-right: $o-snackbar-left;
+$o-snackbar-bottom: 20px;
+$o-snackbar-inner-padding: 16px;

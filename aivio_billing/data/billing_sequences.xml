@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_aivio_payment_proof" model="ir.sequence">
+        <field name="name">AIVIO Payment Proof</field>
+        <field name="code">aivio.payment.proof</field>
+        <field name="prefix">PAY-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

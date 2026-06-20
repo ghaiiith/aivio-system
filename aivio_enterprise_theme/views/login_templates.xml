@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="aivio_login_layout_copyright" inherit_id="web.login_layout" name="AIVIO Login Copyright">
+        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' text-center ') and contains(concat(' ', normalize-space(@class), ' '), ' small ') and contains(concat(' ', normalize-space(@class), ' '), ' mt-4 ')]" position="replace">
+            <div class="text-center small mt-4 pt-3 border-top text-muted" t-if="not disable_footer">
+                Copyright © aivio_enterprise_theme
+                <t t-if="not disable_database_manager">
+                    <br/>
+                    <a href="/web/database/manager">Manage Databases</a>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

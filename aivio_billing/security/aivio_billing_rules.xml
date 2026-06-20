@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_aivio_payment_proof_resident_own" model="ir.rule">
+        <field name="name">AIVIO resident can access own payment proofs</field>
+        <field name="model_id" ref="model_aivio_payment_proof"/>
+        <field name="domain_force">[('resident_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('aivio_mobile_core.group_aivio_resident_user'))]"/>
+    </record>
+</odoo>

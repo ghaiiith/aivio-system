@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'AIVIO Firebase Notifications',
+    'version': '19.0.1.0.0',
+    'category': 'AIVIO',
+    'summary': 'Device tokens, notification queue, templates, logs, and Firebase-ready delivery hooks.',
+    'description': 'Stores mobile device tokens and push notification records for AIVIO. Firebase sending can be connected through server credentials or a queue worker.',
+    'author': 'AIVIO',
+    'maintainer': 'AIVIO',
+    'website': 'https://www.aivio.ai',
+    'license': 'LGPL-3',
+    'depends': ['aivio_mobile_core', 'aivio_residence', 'mail'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/aivio_notification_rules.xml',
+        'views/device_token_views.xml',
+        'views/notification_views.xml',
+        'views/notification_template_views.xml',
+        'views/notification_log_views.xml',
+        'views/notification_menus.xml',
+    ],
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

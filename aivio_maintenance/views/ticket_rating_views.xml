@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><record id="view_aivio_ticket_rating_list" model="ir.ui.view"><field name="name">aivio.ticket.rating.list</field><field name="model">aivio.ticket.rating</field><field name="arch" type="xml"><list><field name="ticket_id"/><field name="user_id"/><field name="rating"/><field name="feedback"/></list></field></record><record id="action_aivio_ticket_ratings" model="ir.actions.act_window"><field name="name">Ticket Ratings</field><field name="res_model">aivio.ticket.rating</field><field name="view_mode">list,form</field></record></odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aivio_billing_rule_manager,aivio.billing.rule.manager,model_aivio_billing_rule,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_payment_proof_manager,aivio.payment.proof.manager,model_aivio_payment_proof,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_payment_proof_resident,aivio.payment.proof.resident,model_aivio_payment_proof,aivio_mobile_core.group_aivio_resident_user,1,1,1,0

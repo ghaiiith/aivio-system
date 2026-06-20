@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_aivio_maintenance_ticket" model="ir.sequence">
+        <field name="name">AIVIO Maintenance Ticket</field>
+        <field name="code">aivio.maintenance.ticket</field>
+        <field name="prefix">MNT-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

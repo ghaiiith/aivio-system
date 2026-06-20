@@ -1,0 +1,44 @@
+body.oe_login {
+    background: linear-gradient(135deg, #C8B4C8 0%, #D4C4D4 25%, #E8DCE8 50%, #D8CCD8 75%, #C0B0C0 100%) !important;
+}
+
+body.oe_login .oe_login_form,
+body.oe_login .card.oe_login_form,
+body.oe_login .o_database_list,
+body.oe_login .card {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+    border: none !important;
+}
+
+body.oe_login .oe_login_form .btn-primary,
+body.oe_login .btn-primary {
+    background-color: #714B67 !important;
+    border-color: #714B67 !important;
+}
+
+body.oe_login .oe_login_form a,
+body.oe_login a {
+    color: #017E84 !important;
+}
+
+/* Install-safe debranding: use CSS instead of brittle QWeb inheritance. */
+body.oe_login .o_brand_promotion,
+body.oe_login a[href*="odoo.com"],
+body.oe_login a[href*="Odoo.com"],
+body.oe_login .text-muted:has(a[href*="odoo.com"]) {
+    display: none !important;
+}
+
+body.oe_login .oe_login_form::after,
+body.oe_login .o_database_list::after {
+    content: "Copyright © aivio_enterprise_theme";
+    display: block;
+    margin-top: 1rem;
+    padding-top: .75rem;
+    border-top: 1px solid rgba(113, 75, 103, .18);
+    color: #6c757d;
+    font-size: .82rem;
+    text-align: center;
+}

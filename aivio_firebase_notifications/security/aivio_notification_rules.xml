@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_aivio_device_token_own" model="ir.rule">
+        <field name="name">AIVIO user can access own device tokens</field>
+        <field name="model_id" ref="model_aivio_mobile_device_token"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+    <record id="rule_aivio_notification_own" model="ir.rule">
+        <field name="name">AIVIO user can access own notifications</field>
+        <field name="model_id" ref="model_aivio_notification"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+</odoo>

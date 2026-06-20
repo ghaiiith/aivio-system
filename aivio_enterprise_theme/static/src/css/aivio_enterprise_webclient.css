@@ -1,0 +1,563 @@
+/* Copyright (C) 2026 aivio_enterprise_theme
+   License AGPL-3.0 or later. */
+
+:root {
+    --aivio-primary: #714B67;
+    --aivio-primary-dark: #5E3E56;
+    --aivio-teal: #017E84;
+    --aivio-bg: #F0F0F0;
+    --aivio-panel: #FFFFFF;
+    --aivio-border: #DEE2E6;
+    --aivio-home-start: #C8B4C8;
+    --aivio-home-end: #E9DEE8;
+    --aivio-navbar-height: var(--o-navbar-height, 46px);
+}
+
+/* ============================================================
+   Core Enterprise-like palette and navbar
+   ============================================================ */
+.o_web_client,
+.o_action_manager,
+.o_content {
+    background: var(--aivio-bg) !important;
+}
+
+.o_main_navbar {
+    background: var(--aivio-panel) !important;
+    border-bottom: 1px solid var(--aivio-border) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05) !important;
+    color: #3C3C3C !important;
+    position: relative !important;
+    z-index: 1030 !important;
+}
+
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .dropdown-toggle,
+.o_main_navbar .o_menu_sections a,
+.o_main_navbar .o_menu_sections button,
+.o_main_navbar .o_menu_systray a,
+.o_main_navbar .o_menu_systray button,
+.o_main_navbar .oi,
+.o_main_navbar .fa {
+    color: #3C3C3C !important;
+}
+
+.o_main_navbar .o_menu_brand:hover,
+.o_main_navbar .o_nav_entry:hover,
+.o_main_navbar .dropdown-toggle:hover,
+.o_main_navbar .o_nav_entry.active,
+.o_main_navbar .dropdown-toggle.show {
+    background-color: #F5F0F4 !important;
+    color: var(--aivio-primary) !important;
+}
+
+.o_aivio_apps_button,
+.o_menu_toggle {
+    width: var(--aivio-navbar-height) !important;
+    min-width: var(--aivio-navbar-height) !important;
+    height: var(--aivio-navbar-height) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #3C3C3C !important;
+    cursor: pointer !important;
+}
+
+.o_aivio_apps_button:hover,
+.o_aivio_apps_button:focus,
+.o_menu_toggle:hover,
+.o_menu_toggle:focus {
+    background: #F5F0F4 !important;
+    color: var(--aivio-primary) !important;
+    outline: none !important;
+}
+
+.o_aivio_apps_button .oi,
+.o_menu_toggle .oi,
+.o_menu_toggle .fa {
+    font-size: 1.25rem !important;
+}
+
+.o_aivio_apps_menu_opened .o_main_navbar .o_menu_brand,
+.o_aivio_apps_menu_opened .o_main_navbar .o_menu_sections,
+.o_aivio_apps_menu_opened .o_main_navbar .o_navbar_breadcrumbs {
+    display: none !important;
+}
+
+.o_aivio_apps_menu_opened .o_action_manager {
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ============================================================
+   Desktop app launcher: built as Owl component, not DOM mutation.
+   ============================================================ */
+.o_aivio_apps_menu_overlay {
+    position: fixed !important;
+    top: var(--aivio-navbar-height) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 1029 !important;
+    overflow: auto !important;
+    background:
+        url("/aivio_enterprise_theme/static/src/img/home-menu-bg-overlay.svg"),
+        linear-gradient(135deg, var(--aivio-home-start) 0%, #D7CBD7 35%, var(--aivio-home-end) 100%) !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.o_aivio_apps_menu_panel {
+    min-height: calc(100vh - var(--aivio-navbar-height)) !important;
+    width: 100% !important;
+    padding: 36px max(18px, calc((100vw - 900px) / 2)) 28px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.o_aivio_apps_search_wrap {
+    width: min(520px, calc(100vw - 48px)) !important;
+    margin-bottom: 34px !important;
+}
+
+.o_aivio_apps_search {
+    width: 100% !important;
+    height: 42px !important;
+    border: 0 !important;
+    border-radius: 21px !important;
+    padding: 0 20px !important;
+    background: rgba(255,255,255,.92) !important;
+    box-shadow: 0 2px 9px rgba(0,0,0,.10) !important;
+    color: #3C3C3C !important;
+    outline: none !important;
+    text-align: center !important;
+}
+
+.o_aivio_apps_search:focus {
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(113, 75, 103, .18), 0 5px 18px rgba(0,0,0,.12) !important;
+}
+
+.o_aivio_apps_grid {
+    display: grid !important;
+    grid-template-columns: repeat(6, 105px) !important;
+    justify-content: center !important;
+    align-content: start !important;
+    gap: 30px 40px !important;
+    width: min(900px, calc(100vw - 48px)) !important;
+}
+
+.o_aivio_app_menu_item {
+    width: 105px !important;
+    min-height: 104px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    color: #3C3C3C !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    outline: none !important;
+    cursor: pointer !important;
+}
+
+.o_aivio_app_menu_item:hover,
+.o_aivio_app_menu_item:focus {
+    color: #2C2C2C !important;
+    text-decoration: none !important;
+}
+
+.o_aivio_app_menu_icon {
+    width: 75px !important;
+    height: 75px !important;
+    border-radius: 13px !important;
+    background: #FFFFFF !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 9px !important;
+    box-shadow: none !important;
+    transform: translateZ(0) !important;
+    transition: transform .15s ease, box-shadow .15s ease !important;
+}
+
+.o_aivio_app_menu_item:hover .o_aivio_app_menu_icon,
+.o_aivio_app_menu_item:focus .o_aivio_app_menu_icon,
+.o_aivio_app_menu_item.active .o_aivio_app_menu_icon {
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.10) !important;
+}
+
+.o_aivio_app_menu_icon img {
+    width: 57px !important;
+    height: 57px !important;
+    object-fit: contain !important;
+    border-radius: 6px !important;
+    display: block !important;
+}
+
+.o_aivio_app_menu_label {
+    width: 105px !important;
+    max-width: 105px !important;
+    min-height: 30px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    color: inherit !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+}
+
+.o_aivio_apps_no_results {
+    padding: 18px 22px !important;
+    color: rgba(60,60,60,.72) !important;
+    font-weight: 600 !important;
+}
+
+.o_aivio_apps_footer {
+    margin-top: auto !important;
+    padding-top: 34px !important;
+    color: rgba(60,60,60,.58) !important;
+    font-size: 12px !important;
+    text-align: center !important;
+}
+
+/* ============================================================
+   View polish without breaking Odoo layout
+   ============================================================ */
+.o_control_panel {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid var(--aivio-border) !important;
+}
+
+.o_form_view .o_form_sheet_bg {
+    background: var(--aivio-bg) !important;
+}
+
+.o_form_view .o_form_sheet {
+    background: #FFFFFF !important;
+    border: 1px solid var(--aivio-border) !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+
+.btn-primary,
+.btn-fill-primary {
+    background-color: var(--aivio-primary) !important;
+    border-color: var(--aivio-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-primary:hover,
+.btn-fill-primary:hover {
+    background-color: var(--aivio-primary-dark) !important;
+    border-color: var(--aivio-primary-dark) !important;
+}
+
+.btn-secondary {
+    background: #FFFFFF !important;
+    border-color: var(--aivio-border) !important;
+    color: #4C4C4C !important;
+}
+
+.o_list_renderer .o_list_table thead,
+.o_list_view .o_list_table thead {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2 !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 1px 0 rgba(0,0,0,.08) !important;
+}
+
+.o_list_view .o_list_table .o_list_footer,
+.o_list_renderer .o_list_table .o_list_footer {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 2 !important;
+    background: #FFFFFF !important;
+}
+
+.o_action_manager .dropdown-menu,
+.o_action_manager .o-dropdown--menu,
+.o_action_manager .o_popover {
+    max-height: min(70vh, 620px) !important;
+    overflow-y: auto !important;
+}
+
+/* ============================================================
+   Responsive fixes: keep native Odoo mobile menu, only make it usable.
+   ============================================================ */
+.o_action_manager,
+.o_view_controller,
+.o_content,
+.o_renderer,
+.o_form_renderer,
+.o_kanban_renderer {
+    min-width: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+    .o_aivio_apps_grid {
+        grid-template-columns: repeat(4, 105px) !important;
+        gap: 26px 30px !important;
+        width: min(560px, calc(100vw - 36px)) !important;
+    }
+
+    .o_control_panel,
+    .o_control_panel_main {
+        gap: .5rem !important;
+    }
+
+    .o_control_panel .o_control_panel_main,
+    .o_control_panel .o_cp_top,
+    .o_control_panel .o_cp_bottom {
+        flex-wrap: wrap !important;
+    }
+
+    .o_searchview,
+    .o_searchview_input_container {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .o_form_view .o_form_sheet,
+    .o_form_view .o_form_sheet_bg > .o_form_sheet {
+        max-width: calc(100vw - 18px) !important;
+        min-width: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .o_main_navbar {
+        min-height: var(--aivio-navbar-height) !important;
+    }
+
+    .o_aivio_apps_menu_overlay {
+        top: 0 !important;
+        z-index: 1060 !important;
+    }
+
+    .o_aivio_apps_menu_panel {
+        min-height: 100dvh !important;
+        padding: 24px 16px 26px !important;
+    }
+
+    .o_aivio_apps_search_wrap {
+        width: min(420px, calc(100vw - 32px)) !important;
+        margin-bottom: 24px !important;
+    }
+
+    .o_aivio_apps_grid {
+        grid-template-columns: repeat(3, 88px) !important;
+        gap: 22px 22px !important;
+        width: min(340px, calc(100vw - 24px)) !important;
+    }
+
+    .o_aivio_app_menu_item,
+    .o_aivio_app_menu_label {
+        width: 88px !important;
+        max-width: 88px !important;
+    }
+
+    .o_aivio_app_menu_icon {
+        width: 64px !important;
+        height: 64px !important;
+    }
+
+    .o_aivio_app_menu_icon img {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .o_control_panel .o_control_panel_navigation,
+    .o_control_panel .o_control_panel_actions {
+        width: 100% !important;
+        max-width: 100% !important;
+        justify-content: flex-start !important;
+    }
+
+    .o_form_view .o_group,
+    .o_form_view .o_inner_group,
+    .o_form_view .row,
+    .o_form_view .o_notebook_content,
+    .o_form_view .o_field_widget,
+    .o_form_view input,
+    .o_form_view textarea,
+    .o_form_view select {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .o_form_view .o_group .o_td_label,
+    .o_form_view .o_inner_group .o_td_label {
+        width: auto !important;
+        min-width: 0 !important;
+        display: block !important;
+        padding-bottom: 3px !important;
+    }
+
+    .o_form_buttons_view,
+    .o_statusbar_buttons,
+    .o_cp_buttons,
+    .o_control_panel .btn-group {
+        flex-wrap: wrap !important;
+        gap: .35rem !important;
+    }
+
+    .o_list_renderer,
+    .o_list_view {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .o_list_renderer .o_list_table,
+    .o_list_view .o_list_table,
+    table.o_list_table {
+        min-width: 720px !important;
+    }
+
+    .o_kanban_renderer .o_kanban_record,
+    .o_kanban_renderer .o_kanban_group {
+        min-width: min(320px, calc(100vw - 24px)) !important;
+    }
+
+    .modal-dialog {
+        margin: .5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+
+    .modal-body,
+    .o_dialog .modal-body {
+        max-height: calc(100dvh - 150px) !important;
+        overflow-y: auto !important;
+    }
+
+    .o-mail-Chatter,
+    .o_Chatter,
+    .o_chatter {
+        max-width: 100% !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+}
+
+/* Native Odoo mobile sidebar; do not rewrite its template. */
+.o_app_menu_sidebar {
+    width: 310px !important;
+    max-width: 86vw !important;
+    background: #FFFFFF !important;
+    box-shadow: 4px 0 22px rgba(0,0,0,.18) !important;
+    z-index: 1055 !important;
+}
+
+.o_app_menu_sidebar .o_sidebar_topbar {
+    min-height: 52px !important;
+    background: #FFFFFF !important;
+    border-bottom: 1px solid var(--aivio-border) !important;
+}
+
+.o_app_menu_sidebar .btn.btn-primary {
+    background: var(--aivio-primary) !important;
+    border-color: var(--aivio-primary) !important;
+}
+
+.o_app_menu_sidebar .o_burger_menu_content li,
+.o_app_menu_sidebar .o_burger_menu_content .o_app {
+    border-radius: 10px !important;
+    margin: 3px 8px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+.o_app_menu_sidebar .o_app.bg-primary-subtle,
+.o_app_menu_sidebar .o_app:hover {
+    background-color: #F5F0F4 !important;
+}
+
+/* Debranding fallback if upstream template structure changes */
+.o_brand_promotion,
+.o_powered_by,
+a[href*="odoo.com"][href*="account"],
+a[href*="odoo.com"][href*="enterprise"] {
+    display: none !important;
+}
+
+/* Dark mode */
+body.o_dark,
+.o_web_client.o_dark {
+    --aivio-bg: #17181C;
+    --aivio-panel: #202126;
+    --aivio-border: #343A40;
+    --aivio-home-start: #2D2431;
+    --aivio-home-end: #252B33;
+}
+
+body.o_dark .o_main_navbar,
+.o_web_client.o_dark .o_main_navbar,
+body.o_dark .o_control_panel,
+.o_web_client.o_dark .o_control_panel,
+body.o_dark .o_form_view .o_form_sheet,
+.o_web_client.o_dark .o_form_view .o_form_sheet,
+body.o_dark .o_app_menu_sidebar,
+.o_web_client.o_dark .o_app_menu_sidebar {
+    background: var(--aivio-panel) !important;
+    color: #E9ECEF !important;
+    border-color: var(--aivio-border) !important;
+}
+
+body.o_dark .o_aivio_app_menu_item,
+body.o_dark .o_aivio_app_menu_label,
+.o_web_client.o_dark .o_aivio_app_menu_item,
+.o_web_client.o_dark .o_aivio_app_menu_label {
+    color: #F1F3F5 !important;
+}
+
+body.o_dark .o_aivio_apps_search,
+.o_web_client.o_dark .o_aivio_apps_search {
+    background: rgba(32,33,38,.94) !important;
+    color: #F1F3F5 !important;
+}
+
+/* RTL */
+html[dir="rtl"] .o_aivio_apps_menu_overlay,
+.o_rtl .o_aivio_apps_menu_overlay,
+html[dir="rtl"] .o_app_menu_sidebar,
+.o_rtl .o_app_menu_sidebar {
+    direction: rtl !important;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #C0B0B8;
+    border-radius: 3px;
+}
+
+/* Safe debranding without inherited views. */
+.o_brand_promotion,
+.o_portal_sidebar a[href*="odoo.com"],
+.o_portal_sidebar [class*="powered"],
+a[href*="odoo.com/page/brand"] {
+    display: none !important;
+}

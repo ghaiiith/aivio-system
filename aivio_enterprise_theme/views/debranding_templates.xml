@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AIVIO debranding: keep the login/portal clean without Odoo promotional blocks. -->
+    <template id="aivio_remove_brand_promotion" inherit_id="web.brand_promotion" name="AIVIO Remove Brand Promotion">
+        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' o_brand_promotion ')]" position="replace"/>
+    </template>
+
+    <template id="aivio_remove_powered_by_login_link" inherit_id="web.login_layout" name="AIVIO Remove Powered By Link">
+        <xpath expr="//a[contains(@href, 'odoo.com')]" position="replace"/>
+    </template>
+
+    <template id="aivio_remove_powered_by_portal_sidebar" inherit_id="portal.portal_record_sidebar" name="AIVIO Remove Powered By Portal Sidebar">
+        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' text-muted ') and contains(., 'Powered by')]" position="replace"/>
+    </template>
+</odoo>

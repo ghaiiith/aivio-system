@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><menuitem id="menu_aivio_billing" name="Billing" parent="aivio_mobile_core.menu_aivio_root" sequence="40"/><menuitem id="menu_aivio_billing_rules" name="Billing Rules" parent="menu_aivio_billing" action="action_aivio_billing_rules" sequence="10"/><menuitem id="menu_aivio_payment_proofs" name="Payment Proofs" parent="menu_aivio_billing" action="action_aivio_payment_proofs" sequence="20"/></odoo>

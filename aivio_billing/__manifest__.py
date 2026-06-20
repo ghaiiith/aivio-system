@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'AIVIO Billing Community',
+    'version': '19.0.1.0.0',
+    'category': 'AIVIO',
+    'summary': 'Residential billing rules, unit invoices, due amounts, and resident payment proofs.',
+    'description': 'Community invoicing integration for AIVIO using account.move customer invoices.',
+    'author': 'AIVIO',
+    'maintainer': 'AIVIO',
+    'website': 'https://www.aivio.ai',
+    'license': 'LGPL-3',
+    'depends': ['aivio_mobile_core', 'aivio_residence', 'aivio_maintenance', 'account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/aivio_billing_rules.xml',
+        'data/billing_sequences.xml',
+        'views/account_move_views.xml',
+        'views/billing_rule_views.xml',
+        'views/payment_proof_views.xml',
+        'views/billing_menus.xml',
+    ],
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

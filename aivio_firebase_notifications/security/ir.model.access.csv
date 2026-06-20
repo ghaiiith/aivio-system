@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aivio_mobile_device_token_manager,aivio.mobile.device.token.manager,model_aivio_mobile_device_token,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_notification_manager,aivio.notification.manager,model_aivio_notification,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_notification_template_manager,aivio.notification.template.manager,model_aivio_notification_template,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_notification_log_manager,aivio.notification.log.manager,model_aivio_notification_log,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_mobile_device_token_portal,aivio.mobile.device.token.portal,model_aivio_mobile_device_token,base.group_portal,1,1,1,0
+access_aivio_notification_portal,aivio.notification.portal,model_aivio_notification,base.group_portal,1,1,0,0

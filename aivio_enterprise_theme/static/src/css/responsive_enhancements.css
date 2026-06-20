@@ -1,0 +1,261 @@
+
+/* Copyright (C) 2026 aivio_enterprise_theme
+   License AGPL-3.0 or later. */
+
+/* ============================================================
+   AIVIO responsive backend enhancements
+   Features inspired by the uploaded web_responsive reference, implemented
+   natively for aivio_enterprise_theme without adding another dependency.
+   ============================================================ */
+
+:root {
+    --aivio-responsive-sidebar-width: 310px;
+    --aivio-mobile-navbar-height: 46px;
+}
+
+/* Sticky list/table headers for long backend lists */
+.o_web_client .o_list_renderer .o_list_table thead,
+.o_web_client .o_list_view .o_list_table thead,
+.o_web_client .table-responsive thead {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 3 !important;
+    background: var(--o-view-background-color, #fff) !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08) !important;
+}
+
+.o_web_client .o_list_renderer,
+.o_web_client .o_kanban_renderer,
+.o_web_client .o_form_renderer,
+.o_web_client .o_content {
+    min-width: 0 !important;
+}
+
+/* Keep dropdowns usable on smaller screens */
+.o_web_client .dropdown-menu,
+.o_web_client .o-dropdown--menu,
+.o_web_client .o_popover {
+    max-height: min(78vh, 620px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+}
+
+/* Control panel wraps cleanly on tablets and phones */
+@media (max-width: 991.98px) {
+    .o_web_client .o_control_panel,
+    .o_web_client .o_control_panel_main {
+        gap: .5rem !important;
+    }
+
+    .o_web_client .o_control_panel .o_cp_top,
+    .o_web_client .o_control_panel .o_cp_bottom,
+    .o_web_client .o_control_panel .o_control_panel_main {
+        flex-wrap: wrap !important;
+    }
+
+    .o_web_client .o_control_panel .o_cp_buttons,
+    .o_web_client .o_control_panel .o_cp_action_menus,
+    .o_web_client .o_control_panel .o_cp_pager,
+    .o_web_client .o_control_panel .o_search_options {
+        max-width: 100% !important;
+    }
+
+    .o_web_client .o_searchview,
+    .o_web_client .o_searchview_input_container {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    .o_web_client .o_form_view .o_form_sheet,
+    .o_web_client .o_form_view .o_form_sheet_bg > .o_form_sheet {
+        max-width: calc(100vw - 18px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
+/* Phone layout: less horizontal scrolling and better touch targets */
+@media (max-width: 767.98px) {
+    body .o_main_navbar {
+        min-height: var(--aivio-mobile-navbar-height) !important;
+    }
+
+    .o_web_client .o_action_manager,
+    .o_web_client .o_content,
+    .o_web_client .o_view_controller,
+    .o_web_client .o_renderer {
+        min-width: 0 !important;
+        max-width: 100vw !important;
+    }
+
+    .o_web_client .o_form_view .o_group,
+    .o_web_client .o_form_view .o_inner_group,
+    .o_web_client .o_form_view .row,
+    .o_web_client .o_form_view .o_notebook_content {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .o_web_client .o_form_view .o_group .o_td_label,
+    .o_web_client .o_form_view .o_inner_group .o_td_label {
+        min-width: 0 !important;
+        width: auto !important;
+        display: block !important;
+        padding-bottom: 3px !important;
+    }
+
+    .o_web_client .o_form_view .o_field_widget,
+    .o_web_client .o_form_view .o_field_many2one_selection,
+    .o_web_client .o_form_view input,
+    .o_web_client .o_form_view textarea,
+    .o_web_client .o_form_view select {
+        max-width: 100% !important;
+    }
+
+    .o_web_client .o_form_buttons_view,
+    .o_web_client .o_statusbar_buttons,
+    .o_web_client .o_cp_buttons,
+    .o_web_client .o_control_panel .btn-group {
+        flex-wrap: wrap !important;
+        gap: .35rem !important;
+    }
+
+    .o_web_client .o_form_buttons_view .btn,
+    .o_web_client .o_statusbar_buttons .btn,
+    .o_web_client .o_cp_buttons .btn {
+        min-height: 36px !important;
+    }
+
+    .o_web_client .o_list_renderer .o_list_table,
+    .o_web_client .o_list_view .o_list_table,
+    .o_web_client table.o_list_table {
+        min-width: 720px !important;
+    }
+
+    .o_web_client .o_list_renderer,
+    .o_web_client .o_list_view {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .o_web_client .o_kanban_renderer {
+        padding-left: .5rem !important;
+        padding-right: .5rem !important;
+    }
+
+    .o_web_client .o_kanban_renderer .o_kanban_record,
+    .o_web_client .o_kanban_renderer .o_kanban_group {
+        min-width: min(320px, calc(100vw - 24px)) !important;
+    }
+
+    .o_web_client .modal-dialog {
+        margin: .5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+
+    .o_web_client .o_dialog .modal-body,
+    .o_web_client .modal-body {
+        max-height: calc(100vh - 150px) !important;
+        overflow-y: auto !important;
+    }
+
+    .o_web_client .o-mail-Chatter,
+    .o_web_client .o_Chatter,
+    .o_web_client .o_chatter {
+        max-width: 100% !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+}
+
+/* Mobile app menu polish similar to the responsive reference */
+.o_app_menu_sidebar {
+    width: var(--aivio-responsive-sidebar-width) !important;
+    max-width: 86vw !important;
+    background: #fff !important;
+    box-shadow: 4px 0 22px rgba(0, 0, 0, .18) !important;
+    z-index: 1055 !important;
+}
+
+.o_app_menu_sidebar .o_sidebar_topbar {
+    min-height: 52px !important;
+}
+
+.o_app_menu_sidebar .o_burger_menu_content li,
+.o_app_menu_sidebar .o_burger_menu_content .o_app {
+    border-radius: 10px !important;
+    margin: 3px 8px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+.o_app_menu_sidebar .o_app_icon {
+    border-radius: 9px !important;
+    background: #fff !important;
+}
+
+/* Native apps dropdown enhancement fallback */
+.o_aivio_native_apps_enhanced {
+    padding-top: 82px !important;
+}
+
+.o_aivio_native_apps_search_wrap {
+    position: fixed !important;
+    top: 64px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(520px, calc(100vw - 48px)) !important;
+    z-index: 2 !important;
+}
+
+.o_aivio_native_apps_search {
+    width: 100% !important;
+    height: 42px !important;
+    border: 0 !important;
+    border-radius: 22px !important;
+    padding: 0 20px !important;
+    background: rgba(255,255,255,.9) !important;
+    box-shadow: 0 2px 9px rgba(0,0,0,.12) !important;
+    text-align: center !important;
+    outline: none !important;
+}
+
+.o_aivio_native_apps_enhanced .o_aivio_et_app_icon {
+    width: 75px !important;
+    height: 75px !important;
+}
+
+.o_aivio_native_apps_enhanced .o_aivio_et_app_label {
+    display: block !important;
+}
+
+/* Debranding fallback in case a template changes upstream */
+a[href*="odoo.com"][href*="account"],
+a[href*="odoo.com"][href*="enterprise"],
+.o_brand_promotion,
+.o_powered_by,
+.o_portal_sidebar [class*="text-muted"]:has(a[href*="odoo.com"]) {
+    display: none !important;
+}
+
+/* Dark mode responsive details */
+body.o_dark .o_app_menu_sidebar,
+.o_web_client.o_dark .o_app_menu_sidebar {
+    background: #202126 !important;
+    color: #f1f3f5 !important;
+}
+
+body.o_dark .o_aivio_native_apps_search,
+.o_web_client.o_dark .o_aivio_native_apps_search {
+    background: rgba(32,33,38,.94) !important;
+    color: #f1f3f5 !important;
+}
+
+/* RTL */
+html[dir="rtl"] .o_app_menu_sidebar,
+.o_rtl .o_app_menu_sidebar {
+    direction: rtl !important;
+    box-shadow: -4px 0 22px rgba(0, 0, 0, .18) !important;
+}
