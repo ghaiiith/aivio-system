@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_aivio_api_docs" model="ir.actions.act_url">
+        <field name="name">AIVIO API Swagger JSON</field>
+        <field name="url">/api/aivio/swagger.json</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_aivio_api_docs" name="API Swagger JSON" parent="aivio_mobile_core.menu_aivio_api" action="action_aivio_api_docs" sequence="30"/>
+</odoo>

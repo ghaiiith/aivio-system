@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aivio_resident_profile_manager,aivio.resident.profile.manager,model_aivio_resident_profile,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_family_member_manager,aivio.family.member.manager,model_aivio_family_member,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_resident_vehicle_manager,aivio.resident.vehicle.manager,model_aivio_resident_vehicle,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_ads_banner_manager,aivio.ads.banner.manager,model_aivio_ads_banner,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_resident_profile_resident,aivio.resident.profile.resident,model_aivio_resident_profile,aivio_mobile_core.group_aivio_resident_user,1,1,0,0
+access_aivio_family_member_resident,aivio.family.member.resident,model_aivio_family_member,aivio_mobile_core.group_aivio_resident_user,1,1,1,0
+access_aivio_resident_vehicle_resident,aivio.resident.vehicle.resident,model_aivio_resident_vehicle,aivio_mobile_core.group_aivio_resident_user,1,1,1,0
+access_aivio_ads_banner_resident,aivio.ads.banner.resident,model_aivio_ads_banner,aivio_mobile_core.group_aivio_resident_user,1,0,0,0

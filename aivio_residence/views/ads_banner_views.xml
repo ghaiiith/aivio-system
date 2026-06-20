@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_ads_banner_list" model="ir.ui.view">
+        <field name="name">aivio.ads.banner.list</field>
+        <field name="model">aivio.ads.banner</field>
+        <field name="arch" type="xml">
+            <list string="App Banners">
+                <field name="sequence" widget="handle"/>
+                <field name="title"/>
+                <field name="target_type"/>
+                <field name="project_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_aivio_ads_banner_form" model="ir.ui.view">
+        <field name="name">aivio.ads.banner.form</field>
+        <field name="model">aivio.ads.banner</field>
+        <field name="arch" type="xml">
+            <form string="App Banner">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="title"/>
+                            <field name="subtitle"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="image_1920" widget="image"/>
+                            <field name="link_url"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <group string="Target">
+                        <field name="target_type"/>
+                        <field name="project_id" invisible="target_type != 'building'"/>
+                        <field name="unit_ids" widget="many2many_tags" invisible="target_type != 'unit'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_aivio_ads_banners" model="ir.actions.act_window">
+        <field name="name">Resident App Banners</field>
+        <field name="res_model">aivio.ads.banner</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

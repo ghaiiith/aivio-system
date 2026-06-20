@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aivio_api_token_manager,aivio.api.token.manager,model_aivio_api_token,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_api_audit_log_manager,aivio.api.audit.log.manager,model_aivio_api_audit_log,aivio_mobile_core.group_aivio_manager,1,1,1,1

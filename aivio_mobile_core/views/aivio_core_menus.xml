@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_aivio_root" name="AIVIO" sequence="20" groups="aivio_mobile_core.group_aivio_manager"/>
+    <menuitem id="menu_aivio_operations" name="Operations" parent="menu_aivio_root" sequence="10"/>
+    <menuitem id="menu_aivio_api" name="API &amp; Security" parent="menu_aivio_root" sequence="80"/>
+    <menuitem id="menu_aivio_configuration" name="Configuration" parent="menu_aivio_root" sequence="100"/>
+</odoo>

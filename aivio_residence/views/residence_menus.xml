@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_aivio_residence" name="Residence" parent="aivio_mobile_core.menu_aivio_root" sequence="10"/>
+    <menuitem id="menu_aivio_residents" name="Residents" parent="menu_aivio_residence" action="action_aivio_resident_profiles" sequence="10"/>
+    <menuitem id="menu_aivio_family_members" name="Family Members" parent="menu_aivio_residence" action="action_aivio_family_members" sequence="20"/>
+    <menuitem id="menu_aivio_resident_vehicles" name="Vehicles" parent="menu_aivio_residence" action="action_aivio_resident_vehicles" sequence="30"/>
+    <menuitem id="menu_aivio_ads_banners" name="Resident App Banners" parent="aivio_mobile_core.menu_aivio_configuration" action="action_aivio_ads_banners" sequence="30"/>
+</odoo>

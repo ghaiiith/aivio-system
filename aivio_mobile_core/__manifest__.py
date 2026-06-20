@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'AIVIO Mobile Core',
+    'version': '19.0.1.0.0',
+    'category': 'AIVIO',
+    'summary': 'Shared AIVIO mobile roles, token storage, audit logs, and backend menus.',
+    'description': 'Community-ready core module for AIVIO mobile/API roles and security foundations.',
+    'author': 'AIVIO',
+    'maintainer': 'AIVIO',
+    'website': 'https://www.aivio.ai',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'web'],
+    'data': [
+        'security/aivio_mobile_core_security.xml',
+        'security/ir.model.access.csv',
+        'data/api_token_cron.xml',
+        'views/aivio_core_menus.xml',
+        'views/api_token_views.xml',
+        'views/api_audit_log_views.xml',
+        'views/res_users_views.xml',
+    ],
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}
