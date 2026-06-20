@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_aivio_visitor_visit_resident_own" model="ir.rule">
+        <field name="name">AIVIO resident can access own visitors</field>
+        <field name="model_id" ref="model_aivio_visitor_visit"/>
+        <field name="domain_force">[('resident_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('aivio_mobile_core.group_aivio_resident_user'))]"/>
+    </record>
+    <record id="rule_aivio_visitor_visit_security_gate" model="ir.rule">
+        <field name="name">AIVIO security can access gate visitors</field>
+        <field name="model_id" ref="model_aivio_visitor_visit"/>
+        <field name="domain_force">['|', ('building_id', 'in', user.aivio_gate_ids.building_id.ids), ('gate_id', 'in', user.aivio_gate_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('aivio_mobile_core.group_aivio_security_user'))]"/>
+    </record>
+    <record id="rule_aivio_guard_shift_security_own" model="ir.rule">
+        <field name="name">AIVIO security can access own shifts</field>
+        <field name="model_id" ref="model_aivio_guard_shift"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('gate_id', 'in', user.aivio_gate_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('aivio_mobile_core.group_aivio_security_user'))]"/>
+    </record>
+</odoo>

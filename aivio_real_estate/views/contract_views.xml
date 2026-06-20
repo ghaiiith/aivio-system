@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_real_estate_contract_list" model="ir.ui.view">
+        <field name="name">aivio.real.estate.contract.list</field>
+        <field name="model">aivio.real.estate.contract</field>
+        <field name="arch" type="xml">
+            <list string="Contracts" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'" decoration-muted="state in ('closed', 'cancelled')">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="unit_id"/>
+                <field name="project_id"/>
+                <field name="contract_type"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="contract_value"/>
+                <field name="amount_paid"/>
+                <field name="amount_residual"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'" decoration-muted="state in ('closed', 'cancelled')"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_contract_form" model="ir.ui.view">
+        <field name="name">aivio.real.estate.contract.form</field>
+        <field name="model">aivio.real.estate.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contract">
+                <header>
+                    <button name="action_generate_installments" type="object" string="Generate Installments" invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="Close" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state not in ('draft', 'confirmed')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state not in ('cancelled',)" groups="aivio_real_estate.group_real_estate_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_invoices" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Main Information">
+                            <field name="reservation_id"/>
+                            <field name="partner_id"/>
+                            <field name="unit_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group string="Contract">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="contract_type"/>
+                            <field name="date_start"/>
+                            <field name="date_end" invisible="contract_type != 'rent'"/>
+                            <field name="contract_value"/>
+                            <field name="deposit_amount"/>
+                        </group>
+                    </group>
+                    <group string="Payment Schedule">
+                        <group>
+                            <field name="installment_count"/>
+                            <field name="payment_frequency"/>
+                            <field name="first_due_date"/>
+                        </group>
+                        <group>
+                            <field name="installment_total" readonly="1"/>
+                            <field name="amount_invoiced" readonly="1"/>
+                            <field name="amount_paid" readonly="1"/>
+                            <field name="amount_residual" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Installments">
+                            <field name="installment_ids" context="{'default_contract_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="invoice_id" readonly="1"/>
+                                    <field name="invoice_state" widget="badge" readonly="1"/>
+                                    <field name="payment_state" widget="badge" readonly="1"/>
+                                    <button name="action_create_invoice" type="object" string="Create Invoice" class="btn-primary" invisible="invoice_id"/>
+                                    <button name="action_open_invoice" type="object" string="Open Invoice" invisible="not invoice_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Terms &amp; Notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_contract_search" model="ir.ui.view">
+        <field name="name">aivio.real.estate.contract.search</field>
+        <field name="model">aivio.real.estate.contract</field>
+        <field name="arch" type="xml">
+            <search string="Contracts">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="unit_id"/>
+                <field name="project_id"/>
+                <filter string="Ownership" name="sale" domain="[('contract_type', '=', 'sale')]"/>
+                <filter string="Rental" name="rent" domain="[('contract_type', '=', 'rent')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'contract_type'}"/>
+                    <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Project" name="group_project" context="{'group_by': 'project_id'}"/>
+                </search>
+        </field>
+    </record>
+
+    <record id="action_aivio_real_estate_contracts" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="res_model">aivio.real.estate.contract</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_aivio_real_estate_contract_search"/>
+    </record>
+</odoo>

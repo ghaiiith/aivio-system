@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_region_main" model="aivio.real.estate.region">
+        <field name="name">Main District</field>
+        <field name="code">MAIN</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_project_tower" model="aivio.real.estate.project">
+        <field name="name">AIVIO Residence Tower</field>
+        <field name="region_id" ref="demo_region_main"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="state">available</field>
+        <field name="address">Main District</field>
+    </record>
+
+    <record id="demo_floor_first" model="aivio.real.estate.floor">
+        <field name="name">First Floor</field>
+        <field name="project_id" ref="demo_project_tower"/>
+        <field name="floor_number">1</field>
+    </record>
+
+    <record id="demo_unit_101" model="aivio.real.estate.unit">
+        <field name="name">Apartment 101</field>
+        <field name="project_id" ref="demo_project_tower"/>
+        <field name="floor_id" ref="demo_floor_first"/>
+        <field name="unit_type_id" ref="unit_type_apartment"/>
+        <field name="sale_price">120000</field>
+        <field name="rent_price">900</field>
+        <field name="area">120</field>
+        <field name="bedrooms">2</field>
+        <field name="bathrooms">2</field>
+        <field name="parking_slots">1</field>
+    </record>
+</odoo>

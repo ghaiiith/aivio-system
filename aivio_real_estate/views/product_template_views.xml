@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form_aivio_real_estate" model="ir.ui.view">
+        <field name="name">product.template.form.aivio.real.estate</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Real Estate" name="aivio_real_estate_product_page" invisible="not is_real_estate_unit">
+                    <group>
+                        <field name="is_real_estate_unit"/>
+                    </group>
+                    <field name="real_estate_unit_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="project_id"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='sale_ok']" position="after">
+                <field name="is_real_estate_unit" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

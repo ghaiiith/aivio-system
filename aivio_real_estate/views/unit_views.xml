@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_real_estate_unit_list" model="ir.ui.view">
+        <field name="name">aivio.real.estate.unit.list</field>
+        <field name="model">aivio.real.estate.unit</field>
+        <field name="arch" type="xml">
+            <list string="Units" decoration-success="state == 'available'" decoration-warning="state == 'reserved'" decoration-danger="state in ('sold', 'rented')" decoration-muted="state in ('blocked', 'maintenance')">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="project_id"/>
+                <field name="floor_id"/>
+                <field name="unit_type_id"/>
+                <field name="area"/>
+                <field name="sale_price"/>
+                <field name="rent_price"/>
+                <field name="state" widget="badge" decoration-success="state == 'available'" decoration-warning="state == 'reserved'" decoration-danger="state in ('sold', 'rented')" decoration-muted="state in ('blocked', 'maintenance')"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_unit_kanban" model="ir.ui.view">
+        <field name="name">aivio.real.estate.unit.kanban</field>
+        <field name="model">aivio.real.estate.unit</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="state">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="project_id"/>
+                <field name="floor_id"/>
+                <field name="unit_type_id"/>
+                <field name="sale_price"/>
+                <field name="rent_price"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_title"><strong><field name="name"/></strong></div>
+                            <div class="text-muted"><field name="code"/> · <field name="project_id"/></div>
+                            <div><field name="unit_type_id"/> <span t-if="record.floor_id.raw_value">· <field name="floor_id"/></span></div>
+                            <div class="mt8">Sale: <field name="sale_price"/> | Rent: <field name="rent_price"/></div>
+                            <field name="state" widget="badge"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_unit_form" model="ir.ui.view">
+        <field name="name">aivio.real.estate.unit.form</field>
+        <field name="model">aivio.real.estate.unit</field>
+        <field name="arch" type="xml">
+            <form string="Unit">
+                <header>
+                    <button name="action_create_reservation" type="object" string="Create Reservation" class="oe_highlight" invisible="state != 'available'"/>
+                    <button name="action_set_available" type="object" string="Set Available" invisible="state == 'available'" groups="aivio_real_estate.group_real_estate_manager"/>
+                    <button name="action_block" type="object" string="Block" invisible="state == 'blocked'" groups="aivio_real_estate.group_real_estate_manager"/>
+                    <button name="action_set_maintenance" type="object" string="Maintenance" invisible="state == 'maintenance'" groups="aivio_real_estate.group_real_estate_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="available,reserved,sold,rented,blocked,maintenance"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_reservations" type="object" class="oe_stat_button" icon="fa-calendar-check-o">
+                            <field name="reservation_count" widget="statinfo" string="Reservations"/>
+                        </button>
+                        <button name="action_open_contracts" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="contract_count" widget="statinfo" string="Contracts"/>
+                        </button>
+                    </div>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Unit Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Location">
+                            <field name="code" readonly="1"/>
+                            <field name="project_id"/>
+                            <field name="region_id" readonly="1"/>
+                            <field name="floor_id"/>
+                            <field name="unit_type_id"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group string="Pricing">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="sale_price"/>
+                            <field name="rent_price"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="product_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Specifications">
+                            <field name="area"/>
+                            <field name="bedrooms"/>
+                            <field name="bathrooms"/>
+                            <field name="parking_slots"/>
+                            <field name="furnished"/>
+                        </group>
+                        <group string="Amenities">
+                            <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+
+                        <page string="Images">
+                            <field name="image_ids" context="{'default_unit_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="image_1920" widget="image"/>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Reservations">
+                            <field name="reservation_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="reservation_date"/>
+                                    <field name="expiry_date"/>
+                                    <field name="expected_contract_type"/>
+                                    <field name="price"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contracts">
+                            <field name="contract_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="contract_type"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="contract_value"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_unit_search" model="ir.ui.view">
+        <field name="name">aivio.real.estate.unit.search</field>
+        <field name="model">aivio.real.estate.unit</field>
+        <field name="arch" type="xml">
+            <search string="Units">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="project_id"/>
+                <field name="region_id"/>
+                <field name="floor_id"/>
+                <field name="unit_type_id"/>
+                <filter string="Available" name="available" domain="[('state', '=', 'available')]"/>
+                <filter string="Reserved" name="reserved" domain="[('state', '=', 'reserved')]"/>
+                <filter string="Sold" name="sold" domain="[('state', '=', 'sold')]"/>
+                <filter string="Rented" name="rented" domain="[('state', '=', 'rented')]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Project" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Floor" name="group_floor" context="{'group_by': 'floor_id'}"/>
+                    <filter string="Unit Type" name="group_unit_type" context="{'group_by': 'unit_type_id'}"/>
+                </search>
+        </field>
+    </record>
+
+    <record id="action_aivio_real_estate_units" model="ir.actions.act_window">
+        <field name="name">Units</field>
+        <field name="res_model">aivio.real.estate.unit</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_aivio_real_estate_unit_search"/>
+        <field name="context">{'search_default_available': 1}</field>
+    </record>
+</odoo>

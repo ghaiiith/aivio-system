@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aivio_security_gate_manager,aivio.security.gate.manager,model_aivio_security_gate,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_guard_shift_manager,aivio.guard.shift.manager,model_aivio_guard_shift,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_visitor_visit_manager,aivio.visitor.visit.manager,model_aivio_visitor_visit,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_access_log_manager,aivio.access.log.manager,model_aivio_access_log,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_security_incident_manager,aivio.security.incident.manager,model_aivio_security_incident,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_blacklist_manager,aivio.blacklist.manager,model_aivio_blacklist,aivio_mobile_core.group_aivio_manager,1,1,1,1
+access_aivio_security_gate_security,aivio.security.gate.security,model_aivio_security_gate,aivio_mobile_core.group_aivio_security_user,1,0,0,0
+access_aivio_guard_shift_security,aivio.guard.shift.security,model_aivio_guard_shift,aivio_mobile_core.group_aivio_security_user,1,1,1,0
+access_aivio_visitor_visit_security,aivio.visitor.visit.security,model_aivio_visitor_visit,aivio_mobile_core.group_aivio_security_user,1,1,1,0
+access_aivio_access_log_security,aivio.access.log.security,model_aivio_access_log,aivio_mobile_core.group_aivio_security_user,1,1,1,0
+access_aivio_security_incident_security,aivio.security.incident.security,model_aivio_security_incident,aivio_mobile_core.group_aivio_security_user,1,1,1,0
+access_aivio_blacklist_security,aivio.blacklist.security,model_aivio_blacklist,aivio_mobile_core.group_aivio_security_user,1,0,0,0
+access_aivio_visitor_visit_resident,aivio.visitor.visit.resident,model_aivio_visitor_visit,aivio_mobile_core.group_aivio_resident_user,1,1,1,0

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_aivio_real_estate" model="ir.ui.view">
+        <field name="name">res.partner.form.aivio.real.estate</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_real_estate_reservations" type="object" class="oe_stat_button" icon="fa-calendar-check-o" invisible="real_estate_reservation_count == 0">
+                    <field name="real_estate_reservation_count" widget="statinfo" string="Reservations"/>
+                </button>
+                <button name="action_open_real_estate_contracts" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="real_estate_contract_count == 0">
+                    <field name="real_estate_contract_count" widget="statinfo" string="Contracts"/>
+                </button>
+            </xpath>
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Real Estate" name="aivio_real_estate_page">
+                    <group>
+                        <field name="is_real_estate_customer"/>
+                    </group>
+                    <group string="Reservations">
+                        <field name="real_estate_reservation_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="unit_id"/>
+                                <field name="reservation_date"/>
+                                <field name="expiry_date"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </group>
+                    <group string="Contracts">
+                        <field name="real_estate_contract_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="unit_id"/>
+                                <field name="contract_type"/>
+                                <field name="contract_value"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

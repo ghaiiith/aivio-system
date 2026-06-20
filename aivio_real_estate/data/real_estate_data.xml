@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="unit_type_apartment" model="aivio.real.estate.unit.type">
+        <field name="name">Apartment</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="unit_type_villa" model="aivio.real.estate.unit.type">
+        <field name="name">Villa</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="unit_type_office" model="aivio.real.estate.unit.type">
+        <field name="name">Office</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="unit_type_shop" model="aivio.real.estate.unit.type">
+        <field name="name">Shop</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="amenity_parking" model="aivio.real.estate.amenity">
+        <field name="name">Parking</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="amenity_elevator" model="aivio.real.estate.amenity">
+        <field name="name">Elevator</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="amenity_security" model="aivio.real.estate.amenity">
+        <field name="name">Security</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="amenity_garden" model="aivio.real.estate.amenity">
+        <field name="name">Garden</field>
+        <field name="sequence">40</field>
+    </record>
+</odoo>

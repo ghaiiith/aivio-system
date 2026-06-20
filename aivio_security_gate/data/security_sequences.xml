@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_aivio_security_gate" model="ir.sequence">
+        <field name="name">AIVIO Security Gate</field>
+        <field name="code">aivio.security.gate</field>
+        <field name="prefix">GATE-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_aivio_visitor_visit" model="ir.sequence">
+        <field name="name">AIVIO Visitor Visit</field>
+        <field name="code">aivio.visitor.visit</field>
+        <field name="prefix">VIS-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_aivio_security_incident" model="ir.sequence">
+        <field name="name">AIVIO Security Incident</field>
+        <field name="code">aivio.security.incident</field>
+        <field name="prefix">INC-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_security_incident_list" model="ir.ui.view"><field name="name">aivio.security.incident.list</field><field name="model">aivio.security.incident</field><field name="arch" type="xml"><list><field name="incident_datetime"/><field name="name"/><field name="gate_id"/><field name="reported_by_id"/><field name="severity"/><field name="state"/></list></field></record>
+    <record id="view_aivio_security_incident_form" model="ir.ui.view"><field name="name">aivio.security.incident.form</field><field name="model">aivio.security.incident</field><field name="arch" type="xml"><form><header><button name="action_done" type="object" string="Done" invisible="state == 'done'"/><field name="state" widget="statusbar"/></header><sheet><group><field name="name"/><field name="incident_datetime"/><field name="gate_id"/><field name="reported_by_id"/><field name="severity"/><field name="attachment" filename="attachment_filename"/><field name="attachment_filename" invisible="1"/></group><field name="description"/></sheet><chatter/></form></field></record>
+    <record id="action_aivio_security_incidents" model="ir.actions.act_window"><field name="name">Security Incidents</field><field name="res_model">aivio.security.incident</field><field name="view_mode">list,form</field></record>
+</odoo>

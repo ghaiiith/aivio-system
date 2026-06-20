@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_aivio_security" name="Security" parent="aivio_mobile_core.menu_aivio_root" sequence="20"/>
+    <menuitem id="menu_aivio_security_visitors" name="Visitors" parent="menu_aivio_security" action="action_aivio_visitor_visits" sequence="10"/>
+    <menuitem id="menu_aivio_security_access_logs" name="Access Logs" parent="menu_aivio_security" action="action_aivio_access_logs" sequence="20"/>
+    <menuitem id="menu_aivio_security_incidents" name="Incidents" parent="menu_aivio_security" action="action_aivio_security_incidents" sequence="30"/>
+    <menuitem id="menu_aivio_security_gates" name="Gates" parent="aivio_mobile_core.menu_aivio_configuration" action="action_aivio_security_gates" sequence="40"/>
+    <menuitem id="menu_aivio_security_shifts" name="Guard Shifts" parent="aivio_mobile_core.menu_aivio_configuration" action="action_aivio_guard_shifts" sequence="50"/>
+    <menuitem id="menu_aivio_security_blacklist" name="Blacklist" parent="aivio_mobile_core.menu_aivio_configuration" action="action_aivio_blacklist" sequence="60"/>
+</odoo>

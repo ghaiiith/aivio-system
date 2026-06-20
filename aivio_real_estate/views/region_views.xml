@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_real_estate_region_list" model="ir.ui.view">
+        <field name="name">aivio.real.estate.region.list</field>
+        <field name="model">aivio.real.estate.region</field>
+        <field name="arch" type="xml">
+            <list string="Regions">
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="project_count"/>
+                <field name="unit_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_region_form" model="ir.ui.view">
+        <field name="name">aivio.real.estate.region.form</field>
+        <field name="model">aivio.real.estate.region</field>
+        <field name="arch" type="xml">
+            <form string="Region">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_projects" type="object" class="oe_stat_button" icon="fa-building-o">
+                            <field name="project_count" widget="statinfo" string="Projects"/>
+                        </button>
+                        <button name="action_open_units" type="object" class="oe_stat_button" icon="fa-home">
+                            <field name="unit_count" widget="statinfo" string="Units"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="complete_name" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="note"/>
+                        </page>
+                        <page string="Sub Regions">
+                            <field name="child_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aivio_real_estate_region_search" model="ir.ui.view">
+        <field name="name">aivio.real.estate.region.search</field>
+        <field name="model">aivio.real.estate.region</field>
+        <field name="arch" type="xml">
+            <search string="Regions">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                
+                    <filter string="Parent Region" name="group_parent" context="{'group_by': 'parent_id'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </search>
+        </field>
+    </record>
+
+    <record id="action_aivio_real_estate_regions" model="ir.actions.act_window">
+        <field name="name">Regions</field>
+        <field name="res_model">aivio.real.estate.region</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_aivio_real_estate_region_search"/>
+    </record>
+</odoo>

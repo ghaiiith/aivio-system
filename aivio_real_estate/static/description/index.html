@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AIVIO Real Estate Management</title>
+    <style>
+        body { margin: 0; font-family: 'Poppins', Arial, sans-serif; background: #f7f7fb; color: #2d2550; }
+        .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 18px; }
+        .hero { border-radius: 28px; padding: 56px; background: linear-gradient(135deg, #5a37b4, #8f6df2); color: white; box-shadow: 0 18px 50px rgba(53, 34, 100, .18); }
+        .hero h1 { font-size: 44px; margin: 0 0 14px; line-height: 1.1; }
+        .hero p { font-size: 18px; margin: 0; max-width: 790px; line-height: 1.7; opacity: .94; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
+        .card { background: white; border-radius: 22px; padding: 24px; box-shadow: 0 10px 30px rgba(53, 34, 100, .08); border: 1px solid #ebe7fb; }
+        .card h3 { margin: 0 0 10px; color: #5a37b4; }
+        .card p { margin: 0; line-height: 1.6; color: #5b5770; }
+        .section { margin-top: 34px; }
+        .section h2 { font-size: 30px; margin: 0 0 16px; }
+        .pill { display: inline-block; padding: 8px 14px; border-radius: 99px; background: #eee8ff; color: #5a37b4; margin: 6px 6px 0 0; font-weight: 600; }
+        .screen { border: 2px dashed #cfc7ee; border-radius: 24px; padding: 34px; text-align: center; color: #77718e; background: white; margin-top: 14px; }
+        .footer { text-align: center; margin-top: 34px; color: #77718e; }
+        @media(max-width: 820px) { .grid { grid-template-columns: 1fr; } .hero { padding: 34px 24px; } .hero h1 { font-size: 32px; } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <section class="hero">
+            <h1>AIVIO Real Estate Management</h1>
+            <p>A clean Odoo 19 Community real estate module for managing projects, buildings, units, reservations, ownership and rental contracts, installment schedules, and customer invoices.</p>
+        </section>
+
+        <section class="grid">
+            <div class="card"><h3>Projects & Regions</h3><p>Organize real estate inventory by regions, projects, buildings, floors, and units with company-safe records.</p></div>
+            <div class="card"><h3>Unit Lifecycle</h3><p>Track availability, reservations, sold/rented units, maintenance, pricing, images, amenities, and linked products.</p></div>
+            <div class="card"><h3>Contracts & Invoices</h3><p>Create ownership or rental contracts, generate installment plans, and create customer invoices from installments.</p></div>
+        </section>
+
+        <section class="section">
+            <h2>Main Features</h2>
+            <span class="pill">Odoo 19 Community</span>
+            <span class="pill">Accounting Integration</span>
+            <span class="pill">Reservations</span>
+            <span class="pill">Ownership Contracts</span>
+            <span class="pill">Rental Contracts</span>
+            <span class="pill">Installments</span>
+            <span class="pill">Multi-company Rules</span>
+            <span class="pill">Clean Security</span>
+        </section>
+
+        <section class="section">
+            <h2>Screenshots</h2>
+            <div class="screen">Placeholder: Projects / Buildings Dashboard</div>
+            <div class="screen">Placeholder: Unit Form with Pricing, Amenities, and Status</div>
+            <div class="screen">Placeholder: Contract Installments and Invoice Buttons</div>
+        </section>
+
+        <section class="section">
+            <h2>Removed Legacy Parts</h2>
+            <div class="card"><p>Removed old backup files, pycache files, Enterprise-only dependencies, old website/gallery controllers, fragile JavaScript widgets, sample image dumps, and legacy report parser clutter. The result is a clean maintainable structure for Odoo 19 Community.</p></div>
+        </section>
+
+        <div class="footer">Built for AIVIO · Odoo 19 Community</div>
+    </div>
+</body>
+</html>

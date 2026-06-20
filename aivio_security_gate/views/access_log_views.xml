@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aivio_access_log_list" model="ir.ui.view"><field name="name">aivio.access.log.list</field><field name="model">aivio.access.log</field><field name="arch" type="xml"><list create="0"><field name="datetime"/><field name="event"/><field name="visit_id"/><field name="gate_id"/><field name="guard_id"/><field name="note"/></list></field></record>
+    <record id="action_aivio_access_logs" model="ir.actions.act_window"><field name="name">Access Logs</field><field name="res_model">aivio.access.log</field><field name="view_mode">list,form</field></record>
+</odoo>

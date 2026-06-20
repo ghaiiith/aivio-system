@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_aivio_real_estate" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.aivio.real.estate</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Real Estate" string="Real Estate" name="aivio_real_estate" groups="aivio_real_estate.group_real_estate_manager">
+                    <block title="Reservations" name="aivio_real_estate_reservation_settings">
+                        <setting id="aivio_real_estate_default_reservation_days" help="Default number of days before a reservation expires.">
+                            <field name="real_estate_default_reservation_days"/>
+                        </setting>
+                    </block>
+                    <block title="Accounting" name="aivio_real_estate_accounting_settings">
+                        <setting id="aivio_real_estate_income_account" help="Fallback income account for generated installment invoices.">
+                            <field name="real_estate_income_account_id"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
