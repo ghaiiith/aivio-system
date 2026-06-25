@@ -27,9 +27,17 @@ class AivioMobileApiController(http.Controller):
         if not data:
             return {}
         try:
-            return json.loads(data)
+            payload = json.loads(data)
         except Exception:
             return {}
+        # Accept both normal REST JSON and Odoo JSON-RPC style bodies:
+        # {"login": "...", "password": "..."}
+        # {"jsonrpc": "2.0", "params": {"db": "...", "login": "...", "password": "..."}}
+        if isinstance(payload, dict) and isinstance(payload.get('params'), dict):
+            params = payload.get('params') or {}
+            params.setdefault('_jsonrpc', payload.get('jsonrpc'))
+            return params
+        return payload if isinstance(payload, dict) else {}
 
     def _json(self, body, status=200):
         return Response(json.dumps(body, ensure_ascii=False, default=str), status=status, content_type='application/json; charset=utf-8')
@@ -227,11 +235,57 @@ class AivioMobileApiController(http.Controller):
         password = payload.get('password')
         if not login or not password:
             return self._error('login and password are required', 'missing_credentials')
+        db = payload.get('db') or request.httprequest.headers.get('X-Odoo-Db') or request.httprequest.args.get('db') or request.db
+        if not db:
+            return self._error('Database is required. Send db in the login body or configure dbfilter for this host.', 'missing_database', 400, 'db')
+
+        # Match Odoo /web/session/authenticate behavior as much as possible.
+        # Depending on the Odoo 19 build, authenticate may return an int, a dict
+        # with uid, or only update request.session.uid.
+        uid = False
+
+        def _extract_uid(result):
+            if isinstance(result, int):
+                return result
+            if isinstance(result, dict):
+                return result.get('uid') or result.get('user_id') or request.session.uid
+            return request.session.uid
+
+        credential = {'login': login, 'password': password, 'type': 'password'}
+        auth_errors = []
         try:
-            uid = request.session.authenticate(request.db, login, password)
-        except Exception:
+            result = request.session.authenticate(db, credential)
+            uid = _extract_uid(result)
+        except TypeError as exc:
+            auth_errors.append(str(exc))
+            try:
+                result = request.session.authenticate(db, login, password)
+                uid = _extract_uid(result)
+            except Exception as old_exc:
+                auth_errors.append(str(old_exc))
+                uid = False
+        except Exception as exc:
+            auth_errors.append(str(exc))
             uid = False
+
         if not uid:
+            # Last safe fallback: call the same low-level user login check used by
+            # Odoo session authentication in many versions. This keeps portal
+            # users working when a custom route is called without an existing web
+            # session.
+            try:
+                Users = request.env['res.users'].sudo()
+                if hasattr(Users, '_login'):
+                    try:
+                        uid = Users._login(db, login, password, request.httprequest.environ)
+                    except TypeError:
+                        uid = Users._login(db, login, password)
+            except Exception as exc:
+                auth_errors.append(str(exc))
+                uid = False
+
+        if not uid:
+            self._audit(None, request.httprequest.path, 'denied', '; '.join(auth_errors), {'login': login, 'db': db})
             return self._error('Invalid login or password', 'invalid_credentials', 401)
         user = request.env['res.users'].sudo().browse(uid)
         if not user.exists() or not user.aivio_app_role:
