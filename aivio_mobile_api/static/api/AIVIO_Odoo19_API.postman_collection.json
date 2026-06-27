@@ -51,27 +51,17 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"params\": {\n    \"db\": \"{{db}}\",\n    \"login\": \"portal\",\n    \"password\": \"123\",\n    \"device_token\": \"firebase-token\"\n  }\n}"
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"params\": {\n    \"db\": \"{{db}}\",\n    \"login\": \"{{login}}\",\n    \"password\": \"{{password}}\",\n    \"device_token\": \"firebase-token\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "auth": {
               "type": "noauth"
             }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "const res = pm.response.json();",
-                  "if (res && res.success && res.data && res.data.token) {",
-                  "    pm.environment.set(\"token\", res.data.token);",
-                  "    pm.environment.set(\"refresh_token\", res.data.refresh_token || \"\");",
-                  "}"
-                ]
-              }
-            }
-          ]
+          }
         },
         {
           "name": "Access Groups",

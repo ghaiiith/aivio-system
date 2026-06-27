@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import logging
 from datetime import timedelta
 
-from odoo import fields, http, _
+from odoo import fields, http, _, api, SUPERUSER_ID
 from odoo.http import request
 from odoo.exceptions import AccessDenied, UserError, ValidationError
 from werkzeug.wrappers import Response
+
+_logger = logging.getLogger(__name__)
 
 
 class AivioMobileApiController(http.Controller):
@@ -21,23 +24,76 @@ class AivioMobileApiController(http.Controller):
     # Generic helpers
     # -----------------------------
     def _payload(self):
-        if request.httprequest.method == 'GET':
-            return dict(request.httprequest.args)
-        data = request.httprequest.get_data(as_text=True) or '{}'
-        if not data:
-            return {}
+        """Return request payload for REST JSON, Odoo JSON-RPC style, form-data,
+        and Postman bodies.
+
+        Odoo can expose request data differently depending on route type,
+        content type, and whether the body is sent as JSON-RPC:
+
+            {"db": "test", "login": "admin", "password": "123"}
+            {"jsonrpc": "2.0", "params": {"db": "test", "login": "admin", "password": "123"}}
+
+        This helper normalizes all formats into one flat dict.
+        """
+        payload = {}
+
+        def _merge(source):
+            if not isinstance(source, dict):
+                return
+            # JSON-RPC wrapper: keep only params as business payload.
+            params = source.get('params')
+            if isinstance(params, str):
+                try:
+                    params = json.loads(params)
+                except Exception:
+                    params = None
+            if isinstance(params, dict):
+                payload.update(params)
+                if source.get('jsonrpc'):
+                    payload['_jsonrpc'] = source.get('jsonrpc')
+            else:
+                payload.update(source)
+
+        # URL query string, useful for GET and db/token fallback.
         try:
-            payload = json.loads(data)
+            _merge(dict(request.httprequest.args or {}))
         except Exception:
-            return {}
-        # Accept both normal REST JSON and Odoo JSON-RPC style bodies:
-        # {"login": "...", "password": "..."}
-        # {"jsonrpc": "2.0", "params": {"db": "...", "login": "...", "password": "..."}}
-        if isinstance(payload, dict) and isinstance(payload.get('params'), dict):
-            params = payload.get('params') or {}
-            params.setdefault('_jsonrpc', payload.get('jsonrpc'))
-            return params
-        return payload if isinstance(payload, dict) else {}
+            pass
+
+        # Form encoded data.
+        try:
+            _merge(dict(request.httprequest.form or {}))
+        except Exception:
+            pass
+
+        # Odoo may already parse params in some request paths.
+        try:
+            _merge(dict(request.params or {}))
+        except Exception:
+            pass
+
+        # Raw JSON body. cache=True keeps it available if Werkzeug/Odoo already read it.
+        try:
+            raw = request.httprequest.get_data(cache=True, as_text=True) or ''
+            if raw:
+                parsed = json.loads(raw)
+                _merge(parsed)
+        except Exception:
+            pass
+
+        # Extra safety for clients that send {"params": {...}} as string only.
+        params = payload.get('params')
+        if isinstance(params, str):
+            try:
+                params = json.loads(params)
+                if isinstance(params, dict):
+                    payload.update(params)
+            except Exception:
+                pass
+        elif isinstance(params, dict):
+            payload.update(params)
+
+        return payload
 
     def _json(self, body, status=200):
         return Response(json.dumps(body, ensure_ascii=False, default=str), status=status, content_type='application/json; charset=utf-8')
@@ -228,6 +284,131 @@ class AivioMobileApiController(http.Controller):
     # -----------------------------
     # Auth endpoints
     # -----------------------------
+    def _mask_payload(self, payload):
+        safe = {}
+        for key, value in (payload or {}).items():
+            if key in ('password', 'token', 'refresh_token', 'device_token'):
+                safe[key] = '***' if value else value
+            else:
+                safe[key] = value
+        return safe
+
+    def _auth_uid_from_result(self, auth_result):
+        if isinstance(auth_result, dict):
+            return auth_result.get('uid') or auth_result.get('user_id') or False
+        if isinstance(auth_result, int):
+            return auth_result
+        return getattr(request.session, 'uid', False) or False
+
+    def _try_auth_attempt(self, label, func):
+        try:
+            auth_result = func()
+            uid = self._auth_uid_from_result(auth_result)
+            _logger.warning(
+                "AIVIO_AUTH attempt=%s result_type=%s uid=%s session_uid=%s",
+                label, type(auth_result).__name__, uid, getattr(request.session, 'uid', None)
+            )
+            return uid
+        except Exception as exc:
+            _logger.exception("AIVIO_AUTH attempt=%s failed: %s", label, exc)
+            return False
+
+    def _authenticate_odoo_user(self, payload, login, password):
+        """Authenticate with verbose diagnostics for Odoo 19 builds.
+
+        The working Odoo endpoint /web/session/authenticate uses session
+        authentication with a credentials dictionary. Different 19.0 post builds
+        have slightly different method signatures, so we try the safe variants
+        and log every attempt with the prefix AIVIO_AUTH.
+        """
+        db_name = payload.get('db') or getattr(request.session, 'db', None) or request.db
+        credential = {'login': login, 'password': password, 'type': 'password'}
+        credential_with_db = dict(credential, db=db_name)
+
+        _logger.warning(
+            "AIVIO_AUTH start path=%s method=%s content_type=%s request_db=%s session_db=%s target_db=%s login=%s payload=%s remote=%s",
+            request.httprequest.path,
+            request.httprequest.method,
+            request.httprequest.content_type,
+            request.db,
+            getattr(request.session, 'db', None),
+            db_name,
+            login,
+            self._mask_payload(payload),
+            request.httprequest.remote_addr,
+        )
+
+        if db_name:
+            try:
+                request.session.update(http.get_default_session(), db=db_name)
+                _logger.warning("AIVIO_AUTH session_update=ok session_db=%s", getattr(request.session, 'db', None))
+            except Exception as exc:
+                _logger.exception("AIVIO_AUTH session_update failed: %s", exc)
+                try:
+                    request.session.db = db_name
+                    _logger.warning("AIVIO_AUTH session_db_set=ok session_db=%s", getattr(request.session, 'db', None))
+                except Exception as exc2:
+                    _logger.exception("AIVIO_AUTH session_db_set failed: %s", exc2)
+
+        # 1) Exact style used by Odoo web/session/authenticate in newer builds.
+        uid = self._try_auth_attempt(
+            'session.authenticate(db, credential_with_db)',
+            lambda: request.session.authenticate(db_name, credential_with_db)
+        )
+        if uid:
+            return uid
+
+        # 2) Same but without db duplicated inside credential.
+        uid = self._try_auth_attempt(
+            'session.authenticate(db, credential)',
+            lambda: request.session.authenticate(db_name, credential)
+        )
+        if uid:
+            return uid
+
+        # 3) Style used by many Odoo 18/19 custom REST modules.
+        uid = self._try_auth_attempt(
+            'session.authenticate(env, credential)',
+            lambda: request.session.authenticate(request.env, credential)
+        )
+        if uid:
+            return uid
+
+        # 4) Legacy fallback still present in some builds.
+        uid = self._try_auth_attempt(
+            'session.authenticate(db, login, password)',
+            lambda: request.session.authenticate(db_name, login, password)
+        )
+        if uid:
+            return uid
+
+        # 5) Direct res.users fallbacks, useful when session API is wrapped.
+        Users = request.env['res.users'].sudo()
+
+        if hasattr(Users, '_login'):
+            for label, args in (
+                ('res.users._login(db, login, password, environ)', (db_name, login, password, request.httprequest.environ)),
+                ('res.users._login(db, credential, environ)', (db_name, credential, request.httprequest.environ)),
+                ('res.users._login(login, password)', (login, password)),
+            ):
+                uid = self._try_auth_attempt(label, lambda args=args: Users._login(*args))
+                if uid:
+                    request.session.uid = uid
+                    return uid
+
+        if hasattr(Users, 'authenticate'):
+            for label, args in (
+                ('res.users.authenticate(db, login, password, environ)', (db_name, login, password, request.httprequest.environ)),
+                ('res.users.authenticate(env, credential)', (request.env, credential)),
+            ):
+                uid = self._try_auth_attempt(label, lambda args=args: Users.authenticate(*args))
+                if uid:
+                    request.session.uid = uid
+                    return uid
+
+        _logger.warning("AIVIO_AUTH failed_all login=%s db=%s", login, db_name)
+        return False
+
     @http.route(['/api/auth/login', '/api/v1/auth/login'], type='http', auth='none', methods=['POST'], csrf=False)
     def login(self, **kw):
         payload = self._payload()
@@ -235,59 +416,10 @@ class AivioMobileApiController(http.Controller):
         password = payload.get('password')
         if not login or not password:
             return self._error('login and password are required', 'missing_credentials')
-        db = payload.get('db') or request.httprequest.headers.get('X-Odoo-Db') or request.httprequest.args.get('db') or request.db
-        if not db:
-            return self._error('Database is required. Send db in the login body or configure dbfilter for this host.', 'missing_database', 400, 'db')
-
-        # Match Odoo /web/session/authenticate behavior as much as possible.
-        # Depending on the Odoo 19 build, authenticate may return an int, a dict
-        # with uid, or only update request.session.uid.
-        uid = False
-
-        def _extract_uid(result):
-            if isinstance(result, int):
-                return result
-            if isinstance(result, dict):
-                return result.get('uid') or result.get('user_id') or request.session.uid
-            return request.session.uid
-
-        credential = {'login': login, 'password': password, 'type': 'password'}
-        auth_errors = []
-        try:
-            result = request.session.authenticate(db, credential)
-            uid = _extract_uid(result)
-        except TypeError as exc:
-            auth_errors.append(str(exc))
-            try:
-                result = request.session.authenticate(db, login, password)
-                uid = _extract_uid(result)
-            except Exception as old_exc:
-                auth_errors.append(str(old_exc))
-                uid = False
-        except Exception as exc:
-            auth_errors.append(str(exc))
-            uid = False
-
+        uid = self._authenticate_odoo_user(payload, login, password)
         if not uid:
-            # Last safe fallback: call the same low-level user login check used by
-            # Odoo session authentication in many versions. This keeps portal
-            # users working when a custom route is called without an existing web
-            # session.
-            try:
-                Users = request.env['res.users'].sudo()
-                if hasattr(Users, '_login'):
-                    try:
-                        uid = Users._login(db, login, password, request.httprequest.environ)
-                    except TypeError:
-                        uid = Users._login(db, login, password)
-            except Exception as exc:
-                auth_errors.append(str(exc))
-                uid = False
-
-        if not uid:
-            self._audit(None, request.httprequest.path, 'denied', '; '.join(auth_errors), {'login': login, 'db': db})
             return self._error('Invalid login or password', 'invalid_credentials', 401)
-        user = request.env['res.users'].sudo().browse(uid)
+        user = request.env['res.users'].sudo().browse(int(uid))
         if not user.exists() or not user.aivio_app_role:
             return self._error('User has no AIVIO mobile role', 'missing_role', 403)
         token = request.env['aivio.api.token'].sudo().create_for_user(
